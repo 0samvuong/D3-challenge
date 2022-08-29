@@ -1,6 +1,8 @@
 // SAM VUONG week 16 homework
 // most of cose taken from activity 12 week 16 day 3
-// doing a scatter plot between Smokers vs. Age
+// doing a scatter plot between healthcare and povery
+
+// half of the code / functions end up unused as i've ran out of time and couldn't get the advanced part done
 
 var svgWidth = 960;
 var svgHeight = 500;
@@ -53,7 +55,7 @@ function renderAxes(newXScale, xAxis) {
   }
 
 
-  // function used for updating circles group with a transition to
+// function used for updating circles group with a transition to
 // new circles
 function renderCircles(circlesGroup, newXScale) {
 
@@ -64,14 +66,13 @@ function renderCircles(circlesGroup, newXScale) {
     return circlesGroup;
   }
 
-    // function used for updating circles group with a transition to
+// function used for updating circles group with a transition to
 // new circles
 function renderCirclesText(circlesText, newXScale) {
 
     circlesText.transition()
       .duration(1000)
      // .attr("x", d => newXScale(d.poverty));
-  
     return circlesText;
   }
 
@@ -81,16 +82,11 @@ d3.csv("assets/data/data.csv").then(function(csvData, err) {
     
    
     // amend data, change int values from str to int 
-    // doing a scatter plot between Smokers vs. Age
+    // doing a scatter plot between poverty and healthcare
     csvData.forEach(data => {
         data.poverty = +data.poverty;
         data.healthcare = +data.healthcare;
-        console.log(data.abbr)
     });
-
-   
-
-    //<div id="scatter">
 
     // xLinearScale function above csv import
     var xLinearScale = xScale(csvData);
@@ -116,7 +112,7 @@ d3.csv("assets/data/data.csv").then(function(csvData, err) {
     chartGroup.append("g")
     .call(leftAxis);
 
-      // append initial circles
+    // append initial circles
     var circlesGroup = chartGroup.selectAll("circle")
     .data(csvData)
     .enter()
@@ -124,7 +120,7 @@ d3.csv("assets/data/data.csv").then(function(csvData, err) {
     .attr("cx", d => xLinearScale(d.poverty))
     .attr("cy", d => yLinearScale(d.healthcare))
     .attr("r", 15)
-    .attr("fill", "red")
+    .attr("fill", "blue")
     .attr("opacity", ".71");
 
     // ok i don't know why, but when i select a non existant tag, it will print all states
@@ -143,14 +139,13 @@ d3.csv("assets/data/data.csv").then(function(csvData, err) {
     var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
+    // x axis label
     var ageLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
-    //.attr("value", "hair_length") // value to grab for event listener
-    //.classed("active", true)
     .text("In Poverty %");
 
-        // append y axis
+     // append y axis
     chartGroup.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", 0 - margin.left)
@@ -159,17 +154,9 @@ d3.csv("assets/data/data.csv").then(function(csvData, err) {
     .classed("axis-text", true)
     .text("Lacks Healthcare %");
 
-
-       // functions here found above csv import
-        // updates x scale for new data
-    xLinearScale = xScale(csvData);
-        // updates x axis with transition
-    xAxis = renderAxes(xLinearScale, xAxis);
-        // updates circles with new x values
-  //  circlesText = renderCirclesText(circlesText, xLinearScale);
-  //  circlesGroup = renderCircles(circlesGroup, xLinearScale);
-    
-
+    // render the graph x axis
+   // xLinearScale = xScale(csvData);
+    //xAxis = renderAxes(xLinearScale, xAxis);
 
 
 
